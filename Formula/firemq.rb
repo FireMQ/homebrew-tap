@@ -7,22 +7,22 @@ class Firemq < Formula
   on_macos do
     on_arm do
       url "https://github.com/FireMQ/firemq/releases/download/v0.1.0/firemq-aarch64-apple-darwin.tar.gz"
-      sha256 "bacce4663ca4c645b8e9e8b487156ab0a8a8d4a1bf37fe88aa89a822dcda3a65"
+      sha256 "34799d93729d0c868e42b8e0ffb0a3aa91ab7fbe5774f8dff0067a8009f3d93e"
     end
     on_intel do
       url "https://github.com/FireMQ/firemq/releases/download/v0.1.0/firemq-x86_64-apple-darwin.tar.gz"
-      sha256 "f56dc9b04785b2293d0885b0c3c6fc5a7d3116143c4cce624d66695091d32e0e"
+      sha256 "d07803281c6397855b12cb698dda997302c5b46065c9b9eee7137bfd92af08c8"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/FireMQ/firemq/releases/download/v0.1.0/firemq-aarch64-unknown-linux-musl.tar.gz"
-      sha256 "4f2aa5cb63a2f83c5fed53afa2c6b6d53dc96ab1550b86a05f1f2b7b01e7fe19"
+      sha256 "ef148d0a7de2b526831c35f7cd9356dd16591389fe946fb0eacf86933892cb58"
     end
     on_intel do
       url "https://github.com/FireMQ/firemq/releases/download/v0.1.0/firemq-x86_64-unknown-linux-musl.tar.gz"
-      sha256 "483cdd9d451d98c52d6217eb80d1714481a74627086c69d7088b911bb7c5ca1b"
+      sha256 "ac65ab8cfd8e2ddbb8fea76bd057f6342c2f40199641065e84d1d4a645acc501"
     end
   end
 

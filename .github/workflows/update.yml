@@ -1,0 +1,42 @@
+name: Update formula
+
+# Points the formula at the newest FireMQ release. Runs daily and on demand; the FireMQ
+# release workflow can also trigger it with a repository_dispatch event of type "release".
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag, for example v0.1.0. Empty means the latest release.
+        required: false
+  repository_dispatch:
+    types: [release]
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Find the release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag || github.event.client_payload.tag }}
+        run: |
+          tag=${TAG:-$(gh release view --repo FireMQ/firemq --json tagName --jq .tagName 2>/dev/null || true)}
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          [ -n "$tag" ] || echo "FireMQ has no release yet; nothing to do."
+      - if: steps.release.outputs.tag != ''
+        run: scripts/update.sh "${{ steps.release.outputs.tag }}"
+      - if: steps.release.outputs.tag != ''
+        name: Commit
+        run: |
+          if git diff --quiet; then echo "Already up to date."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "firemq ${{ steps.release.outputs.tag }}"
+          git push
